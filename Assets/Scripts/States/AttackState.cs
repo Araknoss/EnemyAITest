@@ -11,8 +11,8 @@ public class AttackState : StateMachineBehaviour
         Vector3 attackDestination = _context.directionToPlayer() * _context.attackDistance + _context.transform.position;
         Debug.DrawRay(_context.transform.position, _context.directionToPlayer() * _context.attackDistance, Color.blue, 6f);
 
-        // Desactivar la evasión de obstáculos para que el agente atraviese obstáculos
-        _context.agent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;        
+        
+        _context.agent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;  //Desactivar la evasión de obstáculos
 
         _context.agent.SetDestination(attackDestination);
         _context.agent.speed = _context.attackRunSpeed;
@@ -21,29 +21,23 @@ public class AttackState : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {       
        if(_context.agent.remainingDistance < 0.2f)
-       {
-            _context.agent.isStopped = true;
+       {            
             attackTimer += Time.deltaTime;            
             if(attackTimer >= _context.attackCooldown)
             {
-                animator.SetTrigger("Patrol");
-                _context.agent.isStopped = false;
+                animator.SetTrigger("Patrol");                
             }                          
-       }
-       //if(_context.isCollisioning)
-       //{
-       //     animator.SetBool("Stun");   
-       //}
+       }      
 
-        CheckAttackCollision();
+       CheckAttackCollision();
     }
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        attackTimer = 0f;
-        // (Opcional) Restaurar la evasión de obstáculos
-        _context.agent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.HighQualityObstacleAvoidance;
+        attackTimer = 0f;        
+
+        _context.agent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.HighQualityObstacleAvoidance; //Para que pueda volver a evitar obstáculos
         _context.agent.avoidancePriority = 50;
-        _context.attackCollider.enabled = false;
+        _context.attackCollider.enabled = false;        
     }
 
     public void CheckAttackCollision()
