@@ -18,10 +18,19 @@ public class ChargeState : StateMachineBehaviour
             animator.SetTrigger("Attack");
             chargeTimer = 0f;
         }
+
+        LookAtPlayer();
     }    
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _context.agent.isStopped = false;
+    }
+
+    private void LookAtPlayer()
+    {
+        Vector3 direction = _context.directionToPlayer();
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        _context.transform.rotation = Quaternion.Slerp(_context.transform.rotation, lookRotation, Time.deltaTime * _context.rotationSpeed);
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

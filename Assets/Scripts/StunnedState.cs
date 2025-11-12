@@ -1,8 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Cinemachine;
 public class StunnedState : StateMachineBehaviour
 {
     private EnemyAIContext _context;
+    private CinemachineImpulseSource _impulse;
     private Rigidbody body;
     private float stunTimer;
     private Material enemyMaterial;
@@ -12,6 +14,12 @@ public class StunnedState : StateMachineBehaviour
         _context = animator.GetComponent<EnemyAIContext>();
         _context.agent.isStopped = true;
         _context.agent.velocity = Vector3.zero;
+
+        _impulse = animator.GetComponent<CinemachineImpulseSource>();
+        if(_impulse != null)
+        {
+            _impulse.GenerateImpulse();
+        }
 
         body = animator.GetComponent<Rigidbody>();
         body.isKinematic = true;
