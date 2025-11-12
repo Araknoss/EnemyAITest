@@ -13,8 +13,7 @@ public class StunnedState : StateMachineBehaviour
     {
         _context = animator.GetComponent<EnemyAIContext>();
         _context.agent.isStopped = true;
-        _context.agent.velocity = Vector3.zero;
-        _context.defeatCollider.gameObject.SetActive(true);
+        _context.agent.velocity = Vector3.zero;        
 
         _impulse = animator.GetComponent<CinemachineImpulseSource>();
         if(_impulse != null)
@@ -31,16 +30,16 @@ public class StunnedState : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         stunTimer += Time.deltaTime;
+        if(stunTimer > 0.2f) //Pequeño delay para poder recibir daño
+        {
+            _context.defeatCollider.gameObject.SetActive(true);
+        }
         if(stunTimer >= _context.stunDuration)
         {
             _context.isPatrolling = true;
             stunTimer = 0f;            
         }        
-        //if(Input.GetKeyDown(KeyCode.K))
-        //{
-        //    animator.SetTrigger("Defeat");
-        //    stunTimer = 0f;
-        //}        
+        
         CheckDefeatCollision(animator);
     }
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

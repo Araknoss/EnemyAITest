@@ -48,8 +48,7 @@ public class EnemyAIContext : MonoBehaviour
 
     private void Awake()
     {
-        animator=gameObject.GetComponent<Animator>();
-        attackCollider.enabled = false;
+        animator=gameObject.GetComponent<Animator>();       
     }
     private void Update()
     {
