@@ -9,7 +9,7 @@ public class EnemySpawner : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.U))
         {
             enemy.SetActive(true);
-            enemy.GetComponent<Animator>().SetTrigger("Patrol");
+            //enemy.GetComponent<Animator>().SetTrigger("Patrol");
         }
     }
 }

@@ -12,6 +12,7 @@ public class EnemyAIContext : MonoBehaviour
     [Header("Patrol Settings")]
     public float patrolSpeed = 3.5f;
     public List<Transform> patrolPoints;
+    public bool isPatrolling;
 
     [Header("Detection Settings")]
     public float detectionRange = 10f;
@@ -59,6 +60,7 @@ public class EnemyAIContext : MonoBehaviour
         animator.SetBool("isDetected", isDetected);
         animator.SetBool("isInChargeRange", isInChargeRange);
         animator.SetBool("isCollisioning", isCollisioning);
+        animator.SetBool("isPatrolling", isPatrolling);
     }
     public Vector3 directionToPlayer()
     {

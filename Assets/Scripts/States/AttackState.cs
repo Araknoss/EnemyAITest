@@ -25,7 +25,7 @@ public class AttackState : StateMachineBehaviour
             attackTimer += Time.deltaTime;            
             if(attackTimer >= _context.attackCooldown)
             {
-                animator.SetTrigger("Patrol");                
+                _context.isPatrolling = true;
             }                          
        }      
 

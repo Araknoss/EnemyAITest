@@ -32,7 +32,7 @@ public class StunnedState : StateMachineBehaviour
         stunTimer += Time.deltaTime;
         if(stunTimer >= _context.stunDuration)
         {
-            animator.SetTrigger("Patrol");
+            _context.isPatrolling = true;
             stunTimer = 0f;            
         }        
         if(Input.GetKeyDown(KeyCode.K))
