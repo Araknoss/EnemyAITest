@@ -19,6 +19,7 @@ public class DefeatedState : StateMachineBehaviour
             defeatTimer += Time.deltaTime;
             float alpha = Mathf.Lerp(1f, 0f, defeatTimer / _context.defeatDuration);
             material.color = new Color(initialColor.r, initialColor.g, initialColor.b, alpha);
+            Debug.Log("Alpha: " + alpha);   
         }
         else
         {
