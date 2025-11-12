@@ -24,6 +24,7 @@ public class ChargeState : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _context.agent.isStopped = false;
+        _context.isInChargeRange = false;
     }
 
     private void LookAtPlayer()

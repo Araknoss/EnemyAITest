@@ -16,23 +16,26 @@ public class AttackState : StateMachineBehaviour
 
         _context.agent.SetDestination(attackDestination);
         _context.agent.speed = _context.attackRunSpeed;
+        _context.attackCollider.enabled = true;
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {       
        if(_context.agent.remainingDistance < 0.2f)
        {
             _context.agent.isStopped = true;
-            attackTimer += Time.deltaTime;
+            attackTimer += Time.deltaTime;            
             if(attackTimer >= _context.attackCooldown)
             {
                 animator.SetTrigger("Patrol");
                 _context.agent.isStopped = false;
             }                          
        }
-       if(_context.isCollisioning)
-       {
-            animator.SetTrigger("Stun");   
-       }
+       //if(_context.isCollisioning)
+       //{
+       //     animator.SetBool("Stun");   
+       //}
+
+        CheckAttackCollision();
     }
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -40,6 +43,32 @@ public class AttackState : StateMachineBehaviour
         // (Opcional) Restaurar la evasión de obstáculos
         _context.agent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.HighQualityObstacleAvoidance;
         _context.agent.avoidancePriority = 50;
+        _context.attackCollider.enabled = false;
+    }
+
+    public void CheckAttackCollision()
+    {
+        if (_context.attackCollider == null)
+        {
+            return;
+        }
+
+        Vector3 center = _context.attackCollider.bounds.center;
+        Vector3 halfExtents = _context.attackCollider.bounds.extents;
+        Quaternion orientation = _context.attackCollider.transform.rotation;
+
+        Collider[] hits = Physics.OverlapBox(center, halfExtents, orientation);
+
+        _context.isCollisioning = false;
+        for (int i = 0; i < hits.Length; i++)
+        {
+            Collider hit = hits[i];
+            if (hit.gameObject.CompareTag("Player") || hit.gameObject.CompareTag("Wall"))
+            {
+                _context.isCollisioning = true;
+                break;
+            }
+        }
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

@@ -33,6 +33,7 @@ public class EnemyAIContext : MonoBehaviour
     public float attackDistance = 10f;
     public float attackRunSpeed = 8f;
     public bool isCollisioning=false;
+    public BoxCollider attackCollider;
 
     [Header("Stun Settings")]
     public float stunDuration = 2f;
@@ -43,18 +44,20 @@ public class EnemyAIContext : MonoBehaviour
     private void Awake()
     {
         animator=gameObject.GetComponent<Animator>();
+        attackCollider.enabled = false;
     }
     private void Update()
     {
         if(animator != null)
         {
             SetAnimatorParameters();
-        }            
+        }             
     }
     private void SetAnimatorParameters()
     {
         animator.SetBool("isDetected", isDetected);
         animator.SetBool("isInChargeRange", isInChargeRange);
+        animator.SetBool("isCollisioning", isCollisioning);
     }
     public Vector3 directionToPlayer()
     {
@@ -65,23 +68,7 @@ public class EnemyAIContext : MonoBehaviour
     {
         return Vector3.Distance(player.position, transform.position);
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Player"))
-        {
-            isCollisioning = true;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Player"))
-        {
-            isCollisioning = false;
-        }
-    }
-
+    
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;

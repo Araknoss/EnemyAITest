@@ -33,8 +33,7 @@ public class StunnedState : StateMachineBehaviour
         if(stunTimer >= _context.stunDuration)
         {
             animator.SetTrigger("Patrol");
-            stunTimer = 0f;
-            _context.agent.isStopped = false;
+            stunTimer = 0f;            
         }        
         if(Input.GetKeyDown(KeyCode.K))
         {
@@ -44,13 +43,15 @@ public class StunnedState : StateMachineBehaviour
     }
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // Restaurar el alpha original al salir del estado
+        _context.agent.isStopped = false;
+        _context.isCollisioning = false;
+
         if (enemyMaterial != null)
         {
             enemyMaterial.color = initialColor;
         }
 
-        body.isKinematic = false;
+        body.isKinematic = false;        
     }
 
 
