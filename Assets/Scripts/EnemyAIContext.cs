@@ -36,6 +36,9 @@ public class EnemyAIContext : MonoBehaviour
     [Header("Stun Settings")]
     public float stunDuration = 2f;
 
+    [Header("Defeat Settings")]
+    public float defeatDuration = 2f;
+
     private void Awake()
     {
         animator=gameObject.GetComponent<Animator>();

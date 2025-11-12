@@ -2,17 +2,30 @@ using UnityEngine;
 
 public class DefeatedState : StateMachineBehaviour
 {
-    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    private EnemyAIContext _context;    
+    private Material material;
+    private Color initialColor;
+    private float defeatTimer;
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        _context = animator.GetComponent<EnemyAIContext>();
+        material = animator.gameObject.GetComponent<Renderer>().material;
+        initialColor = material.color;
+    }
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if(defeatTimer < _context.defeatDuration)
+        {
+            defeatTimer += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, defeatTimer / _context.defeatDuration);
+            material.color = new Color(initialColor.r, initialColor.g, initialColor.b, alpha);
+        }
+        else
+        {
+            animator.gameObject.SetActive(false);
+        }
 
-    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

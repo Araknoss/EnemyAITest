@@ -170,7 +170,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 161134136}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -268,6 +268,7 @@ MonoBehaviour:
   attackRunSpeed: 8
   isCollisioning: 0
   stunDuration: 2
+  defeatDuration: 1
 --- !u!95 &161134142
 Animator:
   serializedVersion: 7

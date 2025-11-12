@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 public class StunnedState : StateMachineBehaviour
 {
     private EnemyAIContext _context;    
@@ -8,6 +8,7 @@ public class StunnedState : StateMachineBehaviour
     {
         _context= animator.GetComponent<EnemyAIContext>();
         _context.agent.isStopped = true;
+        _context.agent.velocity = Vector3.zero;
     }    
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -17,6 +18,11 @@ public class StunnedState : StateMachineBehaviour
             animator.SetTrigger("Patrol");
             stunTimer = 0f;
             _context.agent.isStopped = false;
+        }        
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            animator.SetTrigger("Defeat");
+            stunTimer = 0f;
         }
     }   
     
