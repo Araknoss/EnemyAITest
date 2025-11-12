@@ -2,15 +2,20 @@ using UnityEngine;
 using System.Collections.Generic;
 public class StunnedState : StateMachineBehaviour
 {
-    private EnemyAIContext _context;    
+    private EnemyAIContext _context;
+    private Rigidbody body;
     private float stunTimer;
     private Material enemyMaterial;
     private Color initialColor;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        _context= animator.GetComponent<EnemyAIContext>();
+        _context = animator.GetComponent<EnemyAIContext>();
         _context.agent.isStopped = true;
         _context.agent.velocity = Vector3.zero;
+
+        body = animator.GetComponent<Rigidbody>();
+        body.isKinematic = true;
+
         enemyMaterial = animator.gameObject.GetComponent<Renderer>().material;
         initialColor = enemyMaterial.color;
     }    
@@ -36,6 +41,8 @@ public class StunnedState : StateMachineBehaviour
         {
             enemyMaterial.color = initialColor;
         }
+
+        body.isKinematic = false;
     }
 
 

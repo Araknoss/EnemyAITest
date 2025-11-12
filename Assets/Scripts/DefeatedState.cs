@@ -2,13 +2,18 @@ using UnityEngine;
 
 public class DefeatedState : StateMachineBehaviour
 {
-    private EnemyAIContext _context;    
+    private EnemyAIContext _context;
+    private Rigidbody body;
     private Material material;
     private Color initialColor;
     private float defeatTimer;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _context = animator.GetComponent<EnemyAIContext>();
+
+        body = animator.GetComponent<Rigidbody>();
+        body.isKinematic = true;
+
         material = animator.gameObject.GetComponent<Renderer>().material;
         initialColor = material.color;
     }
@@ -19,6 +24,7 @@ public class DefeatedState : StateMachineBehaviour
             defeatTimer += Time.deltaTime;
             float alpha = Mathf.Lerp(1f, 0f, defeatTimer / _context.defeatDuration);
             material.color = new Color(initialColor.r, initialColor.g, initialColor.b, alpha);
+
             Debug.Log("Alpha: " + alpha);   
         }
         else
@@ -27,12 +33,12 @@ public class DefeatedState : StateMachineBehaviour
         }
 
     }
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        material.color = initialColor;
 
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+        body.isKinematic = false;
+    }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
