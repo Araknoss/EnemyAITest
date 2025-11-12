@@ -14,6 +14,7 @@ public class StunnedState : StateMachineBehaviour
         _context = animator.GetComponent<EnemyAIContext>();
         _context.agent.isStopped = true;
         _context.agent.velocity = Vector3.zero;
+        _context.defeatCollider.gameObject.SetActive(true);
 
         _impulse = animator.GetComponent<CinemachineImpulseSource>();
         if(_impulse != null)
@@ -25,7 +26,7 @@ public class StunnedState : StateMachineBehaviour
         body.isKinematic = true;
 
         enemyMaterial = animator.gameObject.GetComponent<Renderer>().material;
-        initialColor = enemyMaterial.color;
+        initialColor = enemyMaterial.color;        
     }    
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -35,35 +36,49 @@ public class StunnedState : StateMachineBehaviour
             _context.isPatrolling = true;
             stunTimer = 0f;            
         }        
-        if(Input.GetKeyDown(KeyCode.K))
-        {
-            animator.SetTrigger("Defeat");
-            stunTimer = 0f;
-        }        
+        //if(Input.GetKeyDown(KeyCode.K))
+        //{
+        //    animator.SetTrigger("Defeat");
+        //    stunTimer = 0f;
+        //}        
+        CheckDefeatCollision(animator);
     }
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _context.agent.isStopped = false;
         _context.isCollisioning = false;
+        _context.defeatCollider.gameObject.SetActive(false);
 
         if (enemyMaterial != null)
         {
             enemyMaterial.color = initialColor;
         }
 
-        body.isKinematic = false;        
+        body.isKinematic = false;       
     }
 
+    public void CheckDefeatCollision(Animator animator)
+    {
+        if (_context.attackCollider == null)
+        {
+            return;
+        }
 
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
+        Vector3 center = _context.defeatCollider.bounds.center;
+        Vector3 halfExtents = _context.defeatCollider.bounds.extents;
+        Quaternion orientation = _context.defeatCollider.transform.rotation;
 
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
+        Collider[] hits = Physics.OverlapBox(center, halfExtents, orientation);
+
+        _context.isCollisioning = false;
+        for (int i = 0; i < hits.Length; i++)
+        {
+            Collider hit = hits[i];
+            if (hit.gameObject.CompareTag("Player"))
+            {
+                animator.SetTrigger("Defeat");
+                break;
+            }
+        }
+    }  
 }

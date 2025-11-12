@@ -110,6 +110,7 @@ namespace StarterAssets
 
         private bool _hasAnimator;
 
+
         private bool IsCurrentDeviceMouse
         {
             get
@@ -130,6 +131,16 @@ namespace StarterAssets
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
+        }
+
+        private void OnEnable()
+        {
+            DefeatedState.OnJumpDefeat += Bounce;
+        }
+
+        private void OnDisable()
+        {
+            DefeatedState.OnJumpDefeat -= Bounce;
         }
 
         private void Start()
@@ -345,6 +356,17 @@ namespace StarterAssets
             if (_verticalVelocity < _terminalVelocity)
             {
                 _verticalVelocity += Gravity * Time.deltaTime;
+            }
+        }
+
+        public void Bounce()
+        {
+            _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+
+            // update animator if using character
+            if (_hasAnimator)
+            {
+                _animator.SetBool(_animIDJump, true);
             }
         }
 

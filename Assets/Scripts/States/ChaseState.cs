@@ -10,6 +10,7 @@ public class ChaseState : StateMachineBehaviour
         
         _context.isDetected = true;
         _context.isInChargeRange = false;
+        _context.isPatrolling = false;
     }
     
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

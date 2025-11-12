@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -7,9 +8,11 @@ public class DefeatedState : StateMachineBehaviour
     private RendererController _rendererController;
     private Rigidbody body;
     private float defeatedTimer;
+    public static Action OnJumpDefeat;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _context = animator.GetComponent<EnemyAIContext>();
+        _context.agent.isStopped = true;
 
         _rendererController = animator.GetComponent<RendererController>();
 
@@ -17,6 +20,8 @@ public class DefeatedState : StateMachineBehaviour
         body.isKinematic = true;
 
         _rendererController.FadeOutMaterialColor(_context.defeatDuration);
+
+        OnJumpDefeat?.Invoke();
     }    
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -29,6 +34,8 @@ public class DefeatedState : StateMachineBehaviour
     }
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {     
+        _context.agent.isStopped = false;
+
         _rendererController.ResetMaterialColor();
         body.isKinematic = false;
     }

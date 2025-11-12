@@ -33,8 +33,8 @@ public class PatrolState : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        patrolPoints.Clear();
-        _context.isPatrolling = false;
+        //_context.isPatrolling = false;
+        patrolPoints.Clear();        
     }
 
     private void GetPatrolPoints()

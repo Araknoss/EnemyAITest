@@ -36,12 +36,15 @@ public class EnemyAIContext : MonoBehaviour
     public float attackRunSpeed = 8f;
     public bool isCollisioning=false;
     public BoxCollider attackCollider;
+    public AnimationCurve attackMovementCurve;
 
     [Header("Stun Settings")]
-    public float stunDuration = 2f;
+    public float stunDuration = 2f;    
 
     [Header("Defeat Settings")]
     public float defeatDuration = 2f;
+    public BoxCollider defeatCollider;
+
 
     private void Awake()
     {
