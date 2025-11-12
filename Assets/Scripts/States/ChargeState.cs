@@ -21,16 +21,13 @@ public class ChargeState : StateMachineBehaviour
         }
 
         LookAtPlayer();
-        _context.chargeEffect.SetActive(true);
-        _context.exclamationEffect.SetActive(true);
-
+        _context.chargeEffect.SetActive(true);       
     }    
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _context.agent.isStopped = false;
         _context.isInChargeRange = false;   
-        _context.chargeEffect.SetActive(false);
-        _context.exclamationEffect.SetActive(false);
+        _context.chargeEffect.SetActive(false);       
     }
     private void LookAtPlayer()
     {

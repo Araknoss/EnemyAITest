@@ -26,8 +26,7 @@ public class EnemyAIContext : MonoBehaviour
     [Header("Charge Settings")]
     public bool isInChargeRange;
     public float rotationSpeed = 5f;
-    public GameObject chargeEffect;
-    public GameObject exclamationEffect;
+    public GameObject chargeEffect;    
 
     [Header("Attack Settings")]
     public float attackRange = 5f; 
