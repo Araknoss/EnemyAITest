@@ -65,6 +65,12 @@ public class AttackState : StateMachineBehaviour
             if (hit.gameObject.CompareTag("Player") || hit.gameObject.CompareTag("Wall"))
             {
                 _context.isCollisioning = true;
+                if(hit.gameObject.TryGetComponent<IDamageable>(out var damageable))
+                {
+                    damageable.TakeDamage(10); 
+                    Debug.Log("AtaqueGolpeaJugador");
+                    _context.attackCollider.gameObject.SetActive(false);
+                }
                 break;
             }
         }

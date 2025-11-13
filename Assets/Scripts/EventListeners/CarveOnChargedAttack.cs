@@ -18,7 +18,7 @@ public class CarveOnChargedAttack : MonoBehaviour
         AttackState.OnChargedAttack -= HandleChargedAttack;
     }
 
-    private void HandleChargedAttack(bool isAttacking)
+    private void HandleChargedAttack(bool isAttacking) //Hacemos que durante el ataque cargado el enemigo se pueda chocar con los obstáculos del NavMesh
     {
         if(navMeshObstacle != null)
             navMeshObstacle.carving = !isAttacking;

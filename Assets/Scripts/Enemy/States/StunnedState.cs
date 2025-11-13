@@ -73,7 +73,7 @@ public class StunnedState : StateMachineBehaviour
         for (int i = 0; i < hits.Length; i++)
         {
             Collider hit = hits[i];
-            if (hit.gameObject.CompareTag("Player"))
+            if (hit.gameObject.CompareTag("Jump"))
             {
                 animator.SetTrigger("Defeat");
                 break;

@@ -11,21 +11,18 @@ public class EnemyAIContext : MonoBehaviour
 
     [Header("Patrol Settings")]
     public float patrolSpeed = 3.5f;
-    public List<Transform> patrolPoints;
-    public bool isPatrolling;
+    public List<Transform> patrolPoints;    
 
     [Header("Detection Settings")]
     public float detectionRange = 10f;
     public float detectionConeRange = 20f;
-    public float detectionAngle = 40f;
-    public bool isDetected;    
+    public float detectionAngle = 40f;   
     public LayerMask obstacleMask;
 
     [Header("Chase Settings")]
     public float chaseSpeed = 5.5f;
 
-    [Header("Charge Settings")]
-    public bool isInChargeRange;
+    [Header("Charge Settings")]    
     public float rotationSpeed = 5f;
     public GameObject chargeEffect;    
 
@@ -34,7 +31,7 @@ public class EnemyAIContext : MonoBehaviour
     public float attackCooldown = 2f;
     public float attackDistance = 10f;
     public float attackRunSpeed = 8f;
-    public bool isCollisioning=false;
+    
     public BoxCollider attackCollider;
     public AnimationCurve attackMovementCurve;
 
@@ -44,6 +41,12 @@ public class EnemyAIContext : MonoBehaviour
     [Header("Defeat Settings")]
     public float defeatDuration = 2f;
     public BoxCollider defeatCollider;
+
+    [Header("Animator Parameters")]
+    public bool isDetected;    
+    public bool isInChargeRange;
+    public bool isCollisioning;
+    public bool isPatrolling;
 
 
     private void Awake()
