@@ -32,8 +32,7 @@ public class EnemyAIContext : MonoBehaviour
     public float attackDistance = 10f;
     public float attackRunSpeed = 8f;
     
-    public BoxCollider attackCollider;
-    public AnimationCurve attackMovementCurve;
+    public BoxCollider attackCollider;    
 
     [Header("Stun Settings")]
     public float stunDuration = 2f;    

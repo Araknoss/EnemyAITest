@@ -4,7 +4,7 @@ using UnityEngine;
 public class RendererController : MonoBehaviour
 {  
     private Material material;
-    private Color initialColor;
+    private Color initialColor;    
     private void Awake()
     {
         material = gameObject.GetComponent<Renderer>().material;
@@ -33,4 +33,11 @@ public class RendererController : MonoBehaviour
         }
         material.color = new Color(initialColor.r, initialColor.g, initialColor.b, 0f);
     }
+
+    public void SetColor(Color color)
+    {
+        material.color = color;
+    }
+
+
 }

@@ -10,8 +10,9 @@ public class AttackState : StateMachineBehaviour
     {
         _context = animator.GetComponent<EnemyAIContext>();
 
-        Vector3 attackDestination = _context.directionToPlayer() * _context.attackDistance + _context.transform.position;
-        Debug.DrawRay(_context.transform.position, _context.directionToPlayer() * _context.attackDistance, Color.blue, 6f);
+        Vector3 directionToPlayerXZ = new Vector3(_context.directionToPlayer().x, 0, _context.directionToPlayer().z).normalized;
+        Vector3 attackDestination = directionToPlayerXZ * _context.attackDistance + _context.transform.position; //Cálculo teniendo en cuenta una distancia predefinida
+        Debug.DrawRay(_context.transform.position, directionToPlayerXZ * _context.attackDistance, Color.blue, 6f);
         
         _context.agent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;  //Desactivar la evasión de obstáculos
 
@@ -75,16 +76,5 @@ public class AttackState : StateMachineBehaviour
             }
         }
     }
-
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
+   
 }

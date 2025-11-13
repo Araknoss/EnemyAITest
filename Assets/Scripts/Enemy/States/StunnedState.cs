@@ -5,9 +5,10 @@ public class StunnedState : StateMachineBehaviour
 {
     private EnemyAIContext _context;
     private CinemachineImpulseSource _impulse;
+    private RendererController _renderer;
     private Rigidbody body;
     private float stunTimer;
-    private Material enemyMaterial;
+    //private Material enemyMaterial;
     private Color initialColor;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -23,9 +24,9 @@ public class StunnedState : StateMachineBehaviour
 
         body = animator.GetComponent<Rigidbody>();
         body.isKinematic = true;
-
-        enemyMaterial = animator.gameObject.GetComponent<Renderer>().material;
-        initialColor = enemyMaterial.color;        
+              
+        _renderer = animator.GetComponentInChildren<RendererController>(); //Le cambiamos el color para que se entienda que esta aturdido, aunque le pondría un efecto
+        _renderer.SetColor(Color.red);
     }    
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -48,10 +49,7 @@ public class StunnedState : StateMachineBehaviour
         _context.isCollisioning = false;
         _context.defeatCollider.gameObject.SetActive(false);
 
-        if (enemyMaterial != null)
-        {
-            enemyMaterial.color = initialColor;
-        }
+        _renderer.ResetMaterialColor();
 
         body.isKinematic = false;       
     }

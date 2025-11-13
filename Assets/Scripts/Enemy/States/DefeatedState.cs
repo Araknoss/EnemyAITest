@@ -9,17 +9,17 @@ public class DefeatedState : StateMachineBehaviour
     private Rigidbody body;
     private float defeatedTimer;
     public static Action OnJumpDefeat;
+    
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _context = animator.GetComponent<EnemyAIContext>();
         _context.agent.isStopped = true;
 
-        _rendererController = animator.GetComponent<RendererController>();
+        _rendererController = animator.GetComponentInChildren<RendererController>();
+        _rendererController.FadeOutMaterialColor(_context.defeatDuration);
 
         body = animator.GetComponent<Rigidbody>();
-        body.isKinematic = true;
-
-        _rendererController.FadeOutMaterialColor(_context.defeatDuration);
+        body.isKinematic = true;              
 
         OnJumpDefeat?.Invoke();
     }    

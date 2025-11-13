@@ -15,10 +15,11 @@ public class PatrolState : StateMachineBehaviour
     {
         _context= animator.GetComponent<EnemyAIContext>();       
         _context.agent.speed = _context.patrolSpeed; //En cada estado se configura la velocidad del agente segun el comportamiento
+
         GetPatrolPoints();
     }
 
-    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
     {
         if (!_context.agent.pathPending && _context.agent.remainingDistance < 0.2f)
         {
@@ -32,8 +33,7 @@ public class PatrolState : StateMachineBehaviour
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        //_context.isPatrolling = false;
+    {        
         patrolPoints.Clear();        
     }
 
